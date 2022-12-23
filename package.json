@@ -1,0 +1,19 @@
+{
+  "name": "timer",
+  "version": "1.0.0",
+  "description": "A simple timer",
+  "repository": "https://github.com/jeconias/timer",
+  "author": "Jeconias Santos <https://github.com/jeconias>",
+  "license": "MIT",
+  "source": "index.html",
+  "scripts": {
+    "start": "parcel --port 1717",
+    "build": "parcel build --public-url ./",
+    "deploy": "gh-pages -d dist"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "2.8.2",
+    "gh-pages": "^4.0.0",
+    "parcel": "^2.8.2"
+  }
+}

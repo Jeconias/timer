@@ -1,0 +1,100 @@
+@use './mixin.scss' as *;
+
+$backgroundColor: #2e3440;
+$fontColor: #fff;
+
+$transparentColor: rgba(255, 255, 255, 0.1);
+
+* {
+  font-family: 'trebuchet ms', verdana, helvetica, arial, sans-serif;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: $backgroundColor;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 16px;
+    border-top: 1px solid $transparentColor;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 8px 16px;
+      margin: 4px;
+      background-color: $transparentColor;
+      border-radius: 4px;
+      cursor: pointer;
+
+      @include opacity-animation;
+
+      span {
+        color: $fontColor;
+        font-size: 2vw;
+      }
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+.timer-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  span {
+    text-align: center;
+    font-size: 17vw;
+    color: $fontColor;
+    cursor: pointer;
+    @include opacity-animation;
+
+    &:hover {
+      opacity: 0.3;
+    }
+  }
+}
+
+#background-timer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: $transparentColor;
+  z-index: 1;
+  pointer-events: none;
+
+  @include opacity-animation(bottom);
+}
+
+.gh-link {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+
+  img {
+    width: 100%;
+    object-position: center;
+  }
+}

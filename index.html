@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Timer Online para contagem regressiva de tempo." />
+    <meta
+      name="keywords"
+      content="Temporizador,Timer,Cronometro Reverso,Tempo" />
+    <meta name="language" content="pt-br" />
+    <title>Timer</title>
+
+    <link rel="stylesheet" type="text/css" href="./css/timer.scss" />
+  </head>
+  <body>
+    <main id="main" class="main">
+      <a
+        class="gh-link"
+        href="https://github.com/jeconias/timer"
+        target="_blank">
+        <img src="./icons/github-mark.svg" />
+      </a>
+      <div id="background-timer"></div>
+      <section class="timer-wrapper">
+        <span id="timer" title="Clique para pausar/continuar">00:00:00</span>
+      </section>
+      <ul id="timers"></ul>
+    </main>
+    <script src="./js/timer.js" type="module"></script>
+  </body>
+</html>

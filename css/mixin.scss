@@ -1,0 +1,10 @@
+$speed-animation: (
+  'fast': 0.1s,
+  'normal': 0.3s,
+  'slow': 0.5s,
+);
+
+@mixin opacity-animation($property: opacity, $speed: 'normal') {
+  transition: $property map-get($speed-animation, $speed) or
+    map-get($speed-animation, 'normal');
+}
