@@ -23,4 +23,13 @@ export const TIME_PROPERTY = 'data-time';
 
 export const CURRENT_TIME_PROPERTY = 'data-current-time';
 
-export const INTERVAL_ID_PROPERTY = 'data-intervalid';
+export const INTERVAL_ID_PROPERTY = 'data-interval-id';
+
+export const LI_NAME_PROPERTY = 'name';
+
+/**
+ *
+ * @param {string | number} name
+ * @returns string
+ */
+export const LI_NAME_VALUE = (name) => `li-time-${name}`;

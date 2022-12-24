@@ -5,6 +5,8 @@ import {
   CUSTOM_EVENTS,
   INTERVAL_ID_PROPERTY,
   TIME_PROPERTY,
+  LI_NAME_PROPERTY,
+  LI_NAME_VALUE,
 } from './constants';
 import { getDarkColor } from './helpers';
 
@@ -20,7 +22,7 @@ const getDateInstance = () => {
  */
 const getTime = (time) => {
   const d = getDateInstance();
-  d.setMilliseconds(time);
+  d.setTime(time);
 
   const isoStringTimer = d.toISOString();
   const [_, year, month, day, hour, minute, second] = isoStringTimer.match(
@@ -111,8 +113,8 @@ const handleStartTimer = function (event) {
  * @param {CustomEvent<{intervalId: number}>} event
  * @this { HTMLSpanElement }
  */
-const handleStopTimer = function () {
-  const el = this;
+const handleStopTimer = () => {
+  const el = document.getElementById('timer');
   const intervalIdFromEl = el.getAttribute(INTERVAL_ID_PROPERTY);
 
   if (intervalIdFromEl) {
@@ -122,6 +124,25 @@ const handleStopTimer = function () {
     if (isNaN(currentTime)) return;
 
     startTimer(currentTime, el, true);
+  }
+};
+
+/**
+ *
+ * @param {KeyboardEvent} event
+ */
+const handleOnGlobalKeyDown = (event) => {
+  if (event.code === 'Space' || event.keyCode === 32) {
+    handleStopTimer();
+  }
+
+  const [_, value] = event?.code?.match(/(?:numpad|digit)(\d{1})/i) ?? [];
+  const number = parseInt(value);
+  if (!isNaN(number)) {
+    const li = document.getElementsByName(LI_NAME_VALUE(number));
+    if (li.length === 1) {
+      li[0].dispatchEvent(new Event('click'));
+    }
   }
 };
 
@@ -161,9 +182,11 @@ window.onload = function () {
 
   if (!timer || !timers) return;
 
+  let shortcutNumber = 0;
   for (const intTimer of DEFAULT_TIMERS) {
     const li = document.createElement('li');
     const span = document.createElement('span');
+    const b = document.createElement('b');
     const { hour, minute, second } = getTime(intTimer);
 
     const applyNewTimer = () => {
@@ -179,8 +202,12 @@ window.onload = function () {
       main.style.backgroundColor = getDarkColor();
     };
 
+    b.innerHTML = shortcutNumber;
     span.innerHTML = `${hour}:${minute}:${second}`;
+
+    span.appendChild(b);
     li.appendChild(span);
+    li.setAttribute(LI_NAME_PROPERTY, LI_NAME_VALUE(shortcutNumber++));
     li.addEventListener('click', applyNewTimer);
 
     timers.appendChild(li);
@@ -188,6 +215,7 @@ window.onload = function () {
 
   timer.addEventListener(CUSTOM_EVENTS.START_TIMER, handleStartTimer);
   timer.addEventListener('click', handleStopTimer);
+  document.body.addEventListener('keydown', handleOnGlobalKeyDown);
 
   const observer = new MutationObserver(onTimerChange);
   observer.observe(timer, { attributes: true });
