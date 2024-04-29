@@ -46,7 +46,7 @@ body {
       span {
         position: relative;
         color: $fontColor;
-        font-size: 2vw;
+        font-size: 2vh;
 
         b {
           position: absolute;
@@ -95,14 +95,56 @@ body {
   @include opacity-animation(bottom);
 }
 
+#information-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  margin: 8px;
+
+  img {
+    width: 100%;
+    cursor: pointer;
+  }
+
+  ul {
+    position: absolute;
+    padding: 8px;
+    top: -1000px;
+    left: 28px;
+    border-radius: 8px;
+    transition: top 0.6s;
+    list-style: none;
+    font-size: 1.5vh;
+    line-height: 1.1;
+    background-color: #ccc;
+  }
+
+  &:hover {
+    ul {
+      top: 0;
+    }
+  }
+}
+
 .gh-link {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 30px;
+  width: 24px;
+  height: 24px;
 
   img {
     width: 100%;
     object-position: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  #timers > li > span b {
+    display: none;
+  }
+
+  #information-icon {
+    display: none;
   }
 }
