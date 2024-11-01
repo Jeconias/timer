@@ -175,7 +175,7 @@ const onTimerChange = (mutations) => {
   backgroundTimer.style.bottom = `${newHeight}px`;
 };
 
-window.onload = function () {
+window.addEventListener('load', function () {
   const main = document.getElementById('main');
   const timer = document.getElementById('timer');
   const timers = document.getElementById('timers');
@@ -219,4 +219,4 @@ window.onload = function () {
 
   const observer = new MutationObserver(onTimerChange);
   observer.observe(timer, { attributes: true });
-};
+});
