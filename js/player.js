@@ -29,6 +29,8 @@ class Notify {
 }
 
 window.addEventListener('load', function () {
+  return; // disabled
+
   const PLAYER = {
     ref: new YT.Player('player', {
       height: '0',
