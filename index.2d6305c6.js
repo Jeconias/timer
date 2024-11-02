@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"4v95w":[function(require,module,exports) {
+})({"65nIi":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "7bc8f997d35038c0";
+module.bundle.HMR_BUNDLE_ID = "3e1d13042d6305c6";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -531,238 +531,121 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"b7mcv":[function(require,module,exports) {
-var _constants = require("./constants");
-var _helpers = require("./helpers");
-const getDateInstance = ()=>{
-    const d = new Date(2014, 10, 10);
-    const timezoneOffset = d.getTimezoneOffset() * 60000;
-    return new Date(d.getTime() - timezoneOffset);
-};
-/**
- *
- * @param {number} time
- */ const getTime = (time)=>{
-    const d = getDateInstance();
-    d.setTime(time);
-    const isoStringTimer = d.toISOString();
-    const [_, year, month, day, hour, minute, second] = isoStringTimer.match(/(\d{4})-(\d{1,2})-(\d{1,2})T(\d{1,2}):(\d{1,2}):(\d{1,2})/);
-    return {
-        year,
-        month,
-        day,
-        hour,
-        minute,
-        second
+},{}],"fBCT6":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var _playCircleSvg = require("../icons/play-circle.svg");
+var _playCircleSvgDefault = parcelHelpers.interopDefault(_playCircleSvg);
+var _pauseCircleSvg = require("../icons/pause-circle.svg");
+var _pauseCircleSvgDefault = parcelHelpers.interopDefault(_pauseCircleSvg);
+class Notify {
+    constructor(){
+        this._requestPermission();
+    }
+    _requestPermission = async ()=>{
+        const GRANTED = "granted";
+        if (!("Notification" in window) || Notification.permission !== GRANTED) return Promise.resolve(false);
+        return Notification.requestPermission().then((result)=>result === GRANTED).catch((err)=>{
+            console.error(err);
+            return false;
+        });
     };
-};
-/**
- *
- * @param {number} intervalId
- * @param {HTMLElement} el
- */ const clear = (intervalId, el)=>{
-    let id = intervalId;
-    if (typeof intervalId === "string") id = parseInt(intervalId);
-    clearInterval(id);
-    if (el) el.removeAttribute((0, _constants.INTERVAL_ID_PROPERTY));
-};
-/**
- *
- * @param {{timer: number}} detail
- * @returns
- */ const newEventStartTimer = (detail)=>new CustomEvent((0, _constants.CUSTOM_EVENTS).START_TIMER, {
-        detail
-    });
-/**
- *
- * @param {number} time
- * @param {HTMLElement} target
- * @param {boolean} skipSetTime
- */ const startTimer = (time, target, skipSetTime)=>{
-    if (!skipSetTime) target.setAttribute((0, _constants.TIME_PROPERTY), time);
-    const base = getDateInstance().getTime();
-    const d = getDateInstance();
-    d.setMilliseconds(time);
-    let id;
-    id = setInterval(()=>{
-        const newTime = d.getTime() - (0, _constants.SECOND);
-        d.setTime(newTime);
-        const { hour , minute , second  } = getTime(newTime);
-        target.innerHTML = `${hour}:${minute}:${second}`;
-        target.setAttribute((0, _constants.INTERVAL_ID_PROPERTY), id);
-        target.setAttribute((0, _constants.CURRENT_TIME_PROPERTY), newTime - base);
-        if (newTime < base) {
-            clear(id, target);
-            target.innerHTML = "00:00:00";
-            target.removeAttribute((0, _constants.CURRENT_TIME_PROPERTY));
-        }
-    }, (0, _constants.SECOND));
-};
-/**
- *
- * @param {CustomEvent<{timer: number, intervalId: number}>} event
- * @this { HTMLSpanElement }
- */ const handleStartTimer = function(event) {
-    const el = this;
-    const timeFromEl = event.detail?.timer;
-    if (event.detail?.intervalId) clear(event.detail.intervalId, el);
-    startTimer(timeFromEl, el);
-};
-/**
- *
- * @param {CustomEvent<{intervalId: number}>} event
- * @this { HTMLSpanElement }
- */ const handleStopTimer = ()=>{
-    const el = document.getElementById("timer");
-    const intervalIdFromEl = el.getAttribute((0, _constants.INTERVAL_ID_PROPERTY));
-    if (intervalIdFromEl) clear(intervalIdFromEl, el);
-    else {
-        const currentTime = parseInt(el.getAttribute((0, _constants.CURRENT_TIME_PROPERTY)));
-        if (isNaN(currentTime)) return;
-        startTimer(currentTime, el, true);
+    async notify(message) {
+        const allowed = await this._requestPermission();
+        if (!allowed || !message) return;
+        new Notification("Timer", {
+            body: message
+        });
     }
-};
-/**
- *
- * @param {KeyboardEvent} event
- */ const handleOnGlobalKeyDown = (event)=>{
-    if (event.code === "Space" || event.keyCode === 32) handleStopTimer();
-    const [_, value] = event?.code?.match(/(?:numpad|digit)(\d{1})/i) ?? [];
-    const number = parseInt(value);
-    if (!isNaN(number)) {
-        const li = document.getElementsByName((0, _constants.LI_NAME_VALUE)(number));
-        if (li.length === 1) li[0].dispatchEvent(new Event("click"));
-    }
-};
-/**
- *
- * @param {MutationRecord[]} mutations
- */ const onTimerChange = (mutations)=>{
-    const backgroundTimer = document.getElementById("background-timer");
-    const timeNode = mutations?.find((m)=>m.attributeName === (0, _constants.CURRENT_TIME_PROPERTY));
-    const target = timeNode?.target;
-    const currentTimeValue = target?.getAttribute((0, _constants.CURRENT_TIME_PROPERTY));
-    const timeValue = target?.getAttribute((0, _constants.TIME_PROPERTY));
-    const currentTimeValueAsInt = parseInt(currentTimeValue);
-    const timeValueAsInt = parseInt(timeValue);
-    if (isNaN(currentTimeValueAsInt) || isNaN(timeValueAsInt)) return;
-    const percentToEnd = Math.floor(currentTimeValueAsInt * 100 / timeValueAsInt);
-    const pageHeight = document.body.scrollHeight;
-    const newHeight = Math.floor(pageHeight - pageHeight * percentToEnd / 100);
-    backgroundTimer.style.bottom = `${newHeight}px`;
-};
+}
 window.addEventListener("load", function() {
-    const main = document.getElementById("main");
-    const timer = document.getElementById("timer");
-    const timers = document.getElementById("timers");
-    if (!timer || !timers) return;
-    let shortcutNumber = 0;
-    for (const intTimer of (0, _constants.DEFAULT_TIMERS)){
-        const li = document.createElement("li");
-        const span = document.createElement("span");
-        const b = document.createElement("b");
-        const { hour , minute , second  } = getTime(intTimer);
-        const applyNewTimer = ()=>{
-            const intervalId = timer.getAttribute((0, _constants.INTERVAL_ID_PROPERTY));
-            timer.dispatchEvent(newEventStartTimer({
-                timer: intTimer,
-                intervalId
-            }));
-            main.style.backgroundColor = (0, _helpers.getDarkColor)();
-        };
-        b.innerHTML = shortcutNumber;
-        span.innerHTML = `${hour}:${minute}:${second}`;
-        span.appendChild(b);
-        li.appendChild(span);
-        li.setAttribute((0, _constants.LI_NAME_PROPERTY), (0, _constants.LI_NAME_VALUE)(shortcutNumber++));
-        li.addEventListener("click", applyNewTimer);
-        timers.appendChild(li);
-    }
-    timer.addEventListener((0, _constants.CUSTOM_EVENTS).START_TIMER, handleStartTimer);
-    timer.addEventListener("click", handleStopTimer);
-    document.body.addEventListener("keydown", handleOnGlobalKeyDown);
-    const observer = new MutationObserver(onTimerChange);
-    observer.observe(timer, {
-        attributes: true
+    const PLAYER = {
+        ref: new YT.Player("player", {
+            height: "0",
+            width: "0",
+            videoId: "tGfQYbArQhc",
+            autoplay: 1,
+            controls: 0,
+            loop: 1,
+            playerVars: {
+                playsinline: 1
+            },
+            events: {}
+        }),
+        metadata: {
+            title: null
+        },
+        done: false
+    };
+    const playerAction = document.getElementById("player-action");
+    const playerIcon = playerAction.getElementsByTagName("img")?.[0];
+    if (!playerAction || !playerIcon) return;
+    const notification = new Notify();
+    playerAction.addEventListener("click", async (event)=>{
+        event.preventDefault();
+        const button = event.currentTarget ?? {};
+        const disableOrEnableButton = ()=>button.disabled = !button.disabled;
+        disableOrEnableButton();
+        const videoTitle = PLAYER.ref.videoTitle;
+        const playerState = PLAYER.ref.getPlayerState();
+        if (videoTitle) PLAYER.metadata.title = videoTitle;
+        const isPaused = [
+            YT.PlayerState.UNSTARTED,
+            YT.PlayerState.PAUSED,
+            YT.PlayerState.CUED
+        ];
+        if (isPaused.includes(playerState)) {
+            PLAYER.ref.playVideo();
+            playerIcon.src = (0, _pauseCircleSvgDefault.default);
+            if (PLAYER.metadata.title) await notification.notify(`Tocando "${PLAYER.metadata.title}"`);
+        } else if (playerState === YT.PlayerState.PLAYING) {
+            PLAYER.ref.stopVideo();
+            playerIcon.src = (0, _playCircleSvgDefault.default);
+            if (PLAYER.metadata.title) await notification.notify(`"${PLAYER.metadata.title}" pausado`);
+        }
+        disableOrEnableButton();
     });
 });
 
-},{"./constants":"1j8D1","./helpers":"6s1be"}],"1j8D1":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "SECOND", ()=>SECOND);
-parcelHelpers.export(exports, "MINUTE", ()=>MINUTE);
-parcelHelpers.export(exports, "DEFAULT_TIMERS", ()=>DEFAULT_TIMERS);
-parcelHelpers.export(exports, "CUSTOM_EVENTS", ()=>CUSTOM_EVENTS);
-parcelHelpers.export(exports, "TIME_PROPERTY", ()=>TIME_PROPERTY);
-parcelHelpers.export(exports, "CURRENT_TIME_PROPERTY", ()=>CURRENT_TIME_PROPERTY);
-parcelHelpers.export(exports, "INTERVAL_ID_PROPERTY", ()=>INTERVAL_ID_PROPERTY);
-parcelHelpers.export(exports, "LI_NAME_PROPERTY", ()=>LI_NAME_PROPERTY);
-parcelHelpers.export(exports, "LI_NAME_VALUE", ()=>LI_NAME_VALUE);
-const SECOND = 1000;
-const MINUTE = 60 * SECOND;
-const DEFAULT_TIMERS = [
-    15 * SECOND,
-    30 * SECOND,
-    MINUTE,
-    5 * MINUTE,
-    10 * MINUTE,
-    15 * MINUTE,
-    20 * MINUTE,
-    30 * MINUTE,
-    45 * MINUTE,
-    60 * MINUTE
-];
-const CUSTOM_EVENTS = {
-    START_TIMER: "startTimer",
-    STOP_TIMER: "click"
-};
-const TIME_PROPERTY = "data-time";
-const CURRENT_TIME_PROPERTY = "data-current-time";
-const INTERVAL_ID_PROPERTY = "data-interval-id";
-const LI_NAME_PROPERTY = "name";
-const LI_NAME_VALUE = (name)=>`li-time-${name}`;
+},{"../icons/play-circle.svg":"6klOY","../icons/pause-circle.svg":"gtr6o","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6klOY":[function(require,module,exports) {
+module.exports = require("fb4a88586f0a81f4").getBundleURL("5kD0c") + "play-circle.b2ae40e1.svg" + "?" + Date.now();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
+},{"fb4a88586f0a81f4":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return "/";
+}
+function getBaseURL(url) {
+    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error("Origin not found");
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
 
-},{}],"6s1be":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "getDarkColor", ()=>getDarkColor);
-const getDarkColor = ()=>{
-    let color = "#";
-    for(let i = 0; i < 3; i++)color += ("0" + Math.floor(Math.random() * Math.pow(16, 2) / 2).toString(16)).slice(-2);
-    return color;
-};
+},{}],"gtr6o":[function(require,module,exports) {
+module.exports = require("319ddc6ffccb401a").getBundleURL("5kD0c") + "pause-circle.335ba6a9.svg" + "?" + Date.now();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["4v95w","b7mcv"], "b7mcv", "parcelRequireb9d2")
+},{"319ddc6ffccb401a":"lgJ39"}]},["65nIi","fBCT6"], "fBCT6", "parcelRequireb9d2")
 
-//# sourceMappingURL=index.d35038c0.js.map
+//# sourceMappingURL=index.2d6305c6.js.map
