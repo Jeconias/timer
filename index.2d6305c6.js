@@ -560,8 +560,8 @@ class Notify {
 window.addEventListener("load", function() {
     const PLAYER = {
         ref: new YT.Player("player", {
-            height: "0",
-            width: "0",
+            height: "500",
+            width: "500",
             videoId: "tGfQYbArQhc",
             autoplay: 1,
             controls: 0,
@@ -607,9 +607,9 @@ window.addEventListener("load", function() {
 });
 
 },{"../icons/play-circle.svg":"6klOY","../icons/pause-circle.svg":"gtr6o","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6klOY":[function(require,module,exports) {
-module.exports = require("fb4a88586f0a81f4").getBundleURL("5kD0c") + "play-circle.b2ae40e1.svg" + "?" + Date.now();
+module.exports = require("258b7590d2f09675").getBundleURL("5kD0c") + "play-circle.b2ae40e1.svg" + "?" + Date.now();
 
-},{"fb4a88586f0a81f4":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+},{"258b7590d2f09675":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
 var bundleURL = {};
 function getBundleURLCached(id) {
@@ -644,8 +644,8 @@ exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
 },{}],"gtr6o":[function(require,module,exports) {
-module.exports = require("319ddc6ffccb401a").getBundleURL("5kD0c") + "pause-circle.335ba6a9.svg" + "?" + Date.now();
+module.exports = require("becdb76ebc8b93ab").getBundleURL("5kD0c") + "pause-circle.335ba6a9.svg" + "?" + Date.now();
 
-},{"319ddc6ffccb401a":"lgJ39"}]},["65nIi","fBCT6"], "fBCT6", "parcelRequireb9d2")
+},{"becdb76ebc8b93ab":"lgJ39"}]},["65nIi","fBCT6"], "fBCT6", "parcelRequireb9d2")
 
 //# sourceMappingURL=index.2d6305c6.js.map
