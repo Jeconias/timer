@@ -560,8 +560,8 @@ class Notify {
 window.addEventListener("load", function() {
     const PLAYER = {
         ref: new YT.Player("player", {
-            height: "500",
-            width: "500",
+            height: "0",
+            width: "0",
             videoId: "tGfQYbArQhc",
             autoplay: 1,
             controls: 0,
