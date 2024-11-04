@@ -7,13 +7,12 @@ class Notify {
   }
 
   _requestPermission = async () => {
-    const GRANTED = 'granted';
+    const isAllowed = (status) => ['granted'].includes(status);
 
-    if (!('Notification' in window) || Notification.permission !== GRANTED)
-      return Promise.resolve(false);
+    if (!('Notification' in window)) return Promise.resolve(false);
 
     return Notification.requestPermission()
-      .then((result) => result === GRANTED)
+      .then((result) => isAllowed(result))
       .catch((err) => {
         console.error(err);
         return false;
