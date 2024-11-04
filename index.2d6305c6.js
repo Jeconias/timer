@@ -542,9 +542,11 @@ class Notify {
         this._requestPermission();
     }
     _requestPermission = async ()=>{
-        const GRANTED = "granted";
-        if (!("Notification" in window) || Notification.permission !== GRANTED) return Promise.resolve(false);
-        return Notification.requestPermission().then((result)=>result === GRANTED).catch((err)=>{
+        const isAllowed = (status)=>[
+                "granted"
+            ].includes(status);
+        if (!("Notification" in window)) return Promise.resolve(false);
+        return Notification.requestPermission().then((result)=>isAllowed(result)).catch((err)=>{
             console.error(err);
             return false;
         });
