@@ -606,12 +606,35 @@ window.addEventListener("load", function() {
         }
         disableOrEnableButton();
     });
+    this.window.addEventListener("keydown", (ev)=>{
+        const isUp = [
+            ev.code,
+            ev.key
+        ].includes("ArrowUp");
+        const isDown = [
+            ev.code,
+            ev.key
+        ].includes("ArrowDown");
+        if (!PLAYER.ref) return;
+        const volume = PLAYER.ref.getVolume();
+        const jump = volume % 2 !== 0 ? 3 : 2;
+        if (isUp && volume < 100) {
+            const newVolumeValue = volume + jump;
+            PLAYER.ref.setVolume(newVolumeValue);
+            console.log(`Action: Volume Up ( from = ${volume}, to = ${newVolumeValue})`);
+        }
+        if (isDown && volume > 0) {
+            const newVolumeValue1 = volume - jump;
+            PLAYER.ref.setVolume(newVolumeValue1);
+            console.log(`Action: Volume Down ( from = ${volume}, to = ${newVolumeValue1})`);
+        }
+    });
 });
 
 },{"../icons/play-circle.svg":"6klOY","../icons/pause-circle.svg":"gtr6o","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6klOY":[function(require,module,exports) {
-module.exports = require("258b7590d2f09675").getBundleURL("5kD0c") + "play-circle.b2ae40e1.svg" + "?" + Date.now();
+module.exports = require("fb4a88586f0a81f4").getBundleURL("5kD0c") + "play-circle.b2ae40e1.svg" + "?" + Date.now();
 
-},{"258b7590d2f09675":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+},{"fb4a88586f0a81f4":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
 var bundleURL = {};
 function getBundleURLCached(id) {
@@ -646,8 +669,8 @@ exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
 },{}],"gtr6o":[function(require,module,exports) {
-module.exports = require("becdb76ebc8b93ab").getBundleURL("5kD0c") + "pause-circle.335ba6a9.svg" + "?" + Date.now();
+module.exports = require("319ddc6ffccb401a").getBundleURL("5kD0c") + "pause-circle.335ba6a9.svg" + "?" + Date.now();
 
-},{"becdb76ebc8b93ab":"lgJ39"}]},["65nIi","fBCT6"], "fBCT6", "parcelRequireb9d2")
+},{"319ddc6ffccb401a":"lgJ39"}]},["65nIi","fBCT6"], "fBCT6", "parcelRequireb9d2")
 
 //# sourceMappingURL=index.2d6305c6.js.map

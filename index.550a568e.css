@@ -95,8 +95,10 @@ html, body {
 }
 
 #information-icon ul {
-  background-color: #ccc;
+  color: #fff;
+  background-color: #0000004d;
   border-radius: 8px;
+  margin: 0;
   padding: 8px;
   font-size: 1.5vh;
   line-height: 1.1;
@@ -111,19 +113,42 @@ html, body {
   top: 0;
 }
 
-.player-content #player-action {
+.player-content {
   width: 24px;
   height: 24px;
+  margin: 8px;
+  position: relative;
+}
+
+.player-content #player-action {
   cursor: pointer;
   background-color: #0000;
   border: 0;
-  margin: 8px;
   padding: 0;
 }
 
 .player-content #player-action img {
   width: 100%;
   height: 100%;
+}
+
+.player-content ul {
+  color: #fff;
+  background-color: #0000004d;
+  border-radius: 8px;
+  margin: 0;
+  padding: 8px;
+  font-size: 1.5vh;
+  line-height: 1.1;
+  list-style: none;
+  transition: top .6s;
+  position: absolute;
+  top: -1000px;
+  left: 28px;
+}
+
+.player-content:hover ul {
+  top: 0;
 }
 
 .gh-link {
