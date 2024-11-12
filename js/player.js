@@ -89,4 +89,29 @@ window.addEventListener('load', function () {
 
     disableOrEnableButton();
   });
+
+  this.window.addEventListener('keydown', (ev) => {
+    const isUp = [ev.code, ev.key].includes('ArrowUp');
+    const isDown = [ev.code, ev.key].includes('ArrowDown');
+
+    if (!PLAYER.ref) return;
+    const volume = PLAYER.ref.getVolume();
+    const jump = volume % 2 !== 0 ? 3 : 2;
+
+    if (isUp && volume < 100) {
+      const newVolumeValue = volume + jump;
+      PLAYER.ref.setVolume(newVolumeValue);
+      console.log(
+        `Action: Volume Up ( from = ${volume}, to = ${newVolumeValue})`
+      );
+    }
+
+    if (isDown && volume > 0) {
+      const newVolumeValue = volume - jump;
+      PLAYER.ref.setVolume(newVolumeValue);
+      console.log(
+        `Action: Volume Down ( from = ${volume}, to = ${newVolumeValue})`
+      );
+    }
+  });
 });
