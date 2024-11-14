@@ -2,10 +2,6 @@ import playIcon from '../icons/play-circle.svg';
 import pauseIcon from '../icons/pause-circle.svg';
 
 class Notify {
-  constructor() {
-    this._requestPermission();
-  }
-
   _requestPermission = async () => {
     const isAllowed = (status) => ['granted'].includes(status);
 
