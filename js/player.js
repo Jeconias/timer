@@ -25,18 +25,7 @@ class Notify {
 
 window.addEventListener('load', function () {
   const PLAYER = {
-    ref: new YT.Player('player', {
-      height: '0',
-      width: '0',
-      videoId: 'tGfQYbArQhc',
-      autoplay: 1,
-      controls: 0,
-      loop: 1,
-      playerVars: {
-        playsinline: 1,
-      },
-      events: {},
-    }),
+    ref: null,
     metadata: {
       title: null,
     },
@@ -48,10 +37,31 @@ window.addEventListener('load', function () {
 
   if (!playerAction || !playerIcon) return;
 
+  const startIFrame = async () => {
+    if (PLAYER.ref) return Promise.resolve();
+
+    PLAYER.ref = new YT.Player('player', {
+      height: '0',
+      width: '0',
+      videoId: 'tGfQYbArQhc',
+      autoplay: 1,
+      controls: 0,
+      loop: 1,
+      playerVars: {
+        playsinline: 1,
+      },
+      events: {},
+    });
+
+    return new Promise((r) => PLAYER.ref.g.addEventListener('load', r));
+  };
+
   const notification = new Notify();
 
   playerAction.addEventListener('click', async (event) => {
     event.preventDefault();
+    await startIFrame();
+
     const button = event.currentTarget ?? {};
 
     const disableOrEnableButton = () => (button.disabled = !button.disabled);
