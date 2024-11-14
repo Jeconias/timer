@@ -538,9 +538,6 @@ var _playCircleSvgDefault = parcelHelpers.interopDefault(_playCircleSvg);
 var _pauseCircleSvg = require("../icons/pause-circle.svg");
 var _pauseCircleSvgDefault = parcelHelpers.interopDefault(_pauseCircleSvg);
 class Notify {
-    constructor(){
-        this._requestPermission();
-    }
     _requestPermission = async ()=>{
         const isAllowed = (status)=>[
                 "granted"
